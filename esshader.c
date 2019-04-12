@@ -24,6 +24,7 @@ static const char vertex_shader_body[] =
 static const char fragment_shader_header[] =
     "uniform vec3 iResolution;"
     "uniform float iTime;"
+    "uniform float iFrame;"
     "uniform float iChannelTime[4];"
     "uniform vec4 iMouse;"
     "uniform vec4 iDate;"
@@ -50,12 +51,14 @@ static GLuint shader_program;
 static GLint attrib_position;
 static GLint sampler_channel[4];
 static GLint uniform_cres;
+static GLint uniform_frame;
 static GLint uniform_ctime;
 static GLint uniform_date;
 static GLint uniform_gtime;
 static GLint uniform_mouse;
 static GLint uniform_res;
 static GLint uniform_srate;
+static int frames = 0;
 
 static void die(const char *format, ...){
     va_list args;
@@ -256,6 +259,7 @@ static void startup(int width, int height, bool fullscreen)
     sampler_channel[2] = glGetUniformLocation(shader_program, "iChannel2");
     sampler_channel[3] = glGetUniformLocation(shader_program, "iChannel3");
     uniform_cres = glGetUniformLocation(shader_program, "iChannelResolution");
+    uniform_frame = glGetUniformLocation(shader_program, "iFrame");
     uniform_ctime = glGetUniformLocation(shader_program, "iChannelTime");
     uniform_date = glGetUniformLocation(shader_program, "iDate");
     uniform_gtime = glGetUniformLocation(shader_program, "iTime");
@@ -322,6 +326,8 @@ static void render(float abstime){
 
     if(uniform_gtime >= 0)
         glUniform1f(uniform_gtime, abstime);
+
+    glUniform1f(uniform_frame, (float)(++frames));
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
