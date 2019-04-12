@@ -23,7 +23,7 @@ static const char vertex_shader_body[] =
 
 static const char fragment_shader_header[] =
     "uniform vec3 iResolution;"
-    "uniform float iGlobalTime;"
+    "uniform float iTime;"
     "uniform float iChannelTime[4];"
     "uniform vec4 iMouse;"
     "uniform vec4 iDate;"
@@ -258,7 +258,7 @@ static void startup(int width, int height, bool fullscreen)
     uniform_cres = glGetUniformLocation(shader_program, "iChannelResolution");
     uniform_ctime = glGetUniformLocation(shader_program, "iChannelTime");
     uniform_date = glGetUniformLocation(shader_program, "iDate");
-    uniform_gtime = glGetUniformLocation(shader_program, "iGlobalTime");
+    uniform_gtime = glGetUniformLocation(shader_program, "iTime");
     uniform_mouse = glGetUniformLocation(shader_program, "iMouse");
     uniform_res = glGetUniformLocation(shader_program, "iResolution");
     uniform_srate = glGetUniformLocation(shader_program, "iSampleRate");
